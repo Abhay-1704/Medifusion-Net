@@ -1,0 +1,35 @@
+{
+  "test_accuracy": 0.959051724137931,
+  "high_confidence_accuracy": 0.9965665236051502,
+  "mean_confidence": 0.9421190023422241,
+  "mean_epistemic_uncertainty": 0.0051028006710112095,
+  "mean_aleatoric_uncertainty": 0.007770397234708071,
+  "mean_total_uncertainty": 0.012873196974396706,
+  "per_class_metrics": {
+    "NORMAL": {
+      "accuracy": 0.948905109489051,
+      "avg_confidence": 0.9284800291061401,
+      "avg_uncertainty": 0.010905365459620953,
+      "sample_count": 548
+    },
+    "PNEUMONIA": {
+      "accuracy": 0.9625292740046838,
+      "avg_confidence": 0.944826066493988,
+      "avg_uncertainty": 0.013635448180139065,
+      "sample_count": 427
+    },
+    "TUBERCULOSIS": {
+      "accuracy": 0.9688249400479616,
+      "avg_confidence": 0.957270622253418,
+      "avg_uncertainty": 0.014678692445158958,
+      "sample_count": 417
+    }
+  },
+  "model_params": 30449921,
+  "training_epochs": 25,
+  "class_names": [
+    "NORMAL",
+    "PNEUMONIA",
+    "TUBERCULOSIS"
+  ]
+}
