@@ -202,7 +202,7 @@ def create_batch_summary(results: List[Dict[str, Any]], filenames: List[str]) ->
     return pd.DataFrame(summary_data)
 
 # === Streamlit UI ===
-st.title("🩺 MediFusion AI - Advanced Chest X-Ray Classifier")
+st.title("🩺 Carelens AI - Advanced Chest X-Ray Classifier")
 st.markdown("Upload single images, multiple files, a ZIP folder, or capture with camera for batch processing")
 
 # === Upload Options ===
