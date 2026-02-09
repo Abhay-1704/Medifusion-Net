@@ -203,19 +203,20 @@ def create_batch_summary(results: List[Dict[str, Any]], filenames: List[str]) ->
 
 # === Streamlit UI ===
 st.title("🩺 MediFusion AI - Advanced Chest X-Ray Classifier")
-st.markdown("Upload single images, multiple files, or a ZIP folder for batch processing")
+st.markdown("Upload single images, multiple files, a ZIP folder, or capture with camera for batch processing")
 
 # === Upload Options ===
 st.subheader("📤 Upload Options")
 
 upload_option = st.radio(
     "Choose your upload method:",
-    ["Single Image", "Multiple Images", "ZIP Folder"],
+    ["Single Image", "Multiple Images", "ZIP Folder", "Camera Capture"],
     horizontal=True
 )
 
 uploaded_files = None
 zip_file = None
+camera_image = None
 
 if upload_option == "Single Image":
     uploaded_files = st.file_uploader(
@@ -239,11 +240,24 @@ elif upload_option == "ZIP Folder":
         type=["zip"]
     )
 
+elif upload_option == "Camera Capture":
+    camera_image = st.camera_input("Take a picture")
+
 # === Processing ===
-if uploaded_files or zip_file:
+if uploaded_files or zip_file or camera_image:
+    
+    # Handle camera image
+    if camera_image:
+        st.info("📸 Processing camera image...")
+        try:
+            img = Image.open(camera_image).convert("RGB")
+            images_to_process = [("camera_capture.jpg", img)]
+        except Exception as e:
+            st.error(f"❌ Could not process camera image: {str(e)}")
+            st.stop()
     
     # Handle ZIP file
-    if zip_file:
+    elif zip_file:
         st.info("📦 Extracting images from ZIP file...")
         extracted_images = extract_images_from_zip(zip_file)
         
@@ -345,6 +359,7 @@ st.sidebar.markdown("""
 - **Single Image**: Upload one X-ray image
 - **Multiple Images**: Select multiple X-ray images
 - **ZIP Folder**: Upload a ZIP file containing X-ray images
+- **Camera Capture**: Take a picture using your device camera
 
 ### Supported Formats:
 - PNG, JPG, JPEG, BMP, TIFF
@@ -355,11 +370,13 @@ st.sidebar.markdown("""
 - 🔥 Grad-CAM visualization for explainability
 - 📈 Batch processing with summary statistics
 - 💾 Downloadable results in CSV format
+- 📸 Real-time camera capture
 
 ### Tips:
 - For large batches, consider disabling Grad-CAM for faster processing
 - ZIP files should contain images directly or in subdirectories
 - Results include both epistemic and aleatoric uncertainty measures
+- Camera capture works on devices with camera access
 """)
 
 # === Footer ===
